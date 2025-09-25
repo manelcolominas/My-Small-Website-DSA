@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GitHub JSON on Page Load</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+<pre id="output"></pre>
+
+<script>
+    $(document).ready(function() {
+      // Fixed username (change as needed)
+      let username = "manelcolominas";
+      let url = `https://api.github.com/users/${username}/repos`;
+
+      $.getJSON(url, function(data) {
+        // Print the entire JSON nicely formatted
+        $("#output").text(JSON.stringify(data, null, 2));
+      }).fail(function() {
+        $("#output").text("Error: Could not fetch data.");
+      });
+    });
+</script>
+</body>
+</html>

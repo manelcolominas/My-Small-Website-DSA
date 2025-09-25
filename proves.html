@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GitHub API with jQuery</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+<h1>GitHub Repositories</h1>
+<div>Top trending developer in GitHub: mitchellh, tonioller, ayangweb</div>
+<input type="text" id="username" placeholder="Enter GitHub username">
+<button id="getRepos">Get Repos</button>
+<div class="container mt-3 " id="repoTable">
+
+<script>
+    $(document).ready(function() {
+      $("#getRepos").click(function() {
+        /* mitchellh */
+        let username = $("#username").val();
+        let url = `https://api.github.com/users/${username}/repos`;
+
+        $.ajax({
+          url: url,
+          method: "GET",
+          dataType: "json",
+          success: function(repos) {
+            $("#repoTable").empty();
+            $("#repoTable").append(`<table class="table table" style="margin-top: 50px"> <thead>`);
+            $("#repoTable").append(`<tr><th>Repository</th>
+            <th>Description</th>
+            <th>Followers</th></tr>`);
+            repos.forEach(function(repo) {
+              $("#repoTable").append(`<tr><td>${repo.name}</td>
+                                          <td>${repo.description || "No description"}</td>
+                                          <td>${repo.stargazers_count}</td></tr>`);
+            });
+            $("#repoTable").append(`</thead>`);
+          },
+          error: function() {
+            alert("User not found or error fetching repos.");
+          }
+        });
+      });
+    });
+</script>
+</body>
+</html>
