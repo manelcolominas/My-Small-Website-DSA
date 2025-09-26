@@ -22,7 +22,7 @@ git push origin main
 git tag v1.0
 git push origin v1.0
 
-
+git init
 Crear repositori
 
 mkdir ejemplo
